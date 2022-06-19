@@ -31,9 +31,8 @@ const startsWithOneOf = (fullPath, arrayOfDirs) => {
 };
 
 const removeFiles = (arrayOfFiles) => {
-  log(`removing ${arrayOfFiles.length} files:`);
   arrayOfFiles.forEach((file) => {
-    log(`removing ${file}`);
+    log(`Removing ${file}`);
     if (options.delete) {
       try {
         fs.unlinkSync(file);
@@ -51,7 +50,7 @@ const main = () => {
   json.forEach((file) => {
     const paths = file.paths;
     log(`--------------------------------------------------`);
-    log(`${paths.length} files as duplicates:`);
+    log(`${paths.length} files marked as duplicates:`);
     paths.forEach((filePath) => log(filePath));
 
     let index = -1;
@@ -65,12 +64,12 @@ const main = () => {
     const filesToRemove = [...paths];
     if (index !== -1) {
       // found, keep the one with index
-      log(`found in ${orderByPaths[index]}, index: ${index}`);
+      log(`Found in ${orderByPaths[index]}`);
       filesToRemove.splice(index, 1);
     } else {
       // not found, keep the first one and delete the rest;
       filesToRemove.splice(0, 1);
-      log(`not found any of ${orderByPaths}`);
+      log(`Not found in any of ${orderByPaths}`);
     }
     removeFiles(filesToRemove);
   });
