@@ -1,18 +1,27 @@
 {
-  "name": "file-cleaner",
+  "name": "delete-duplicates",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Delete duplicated files from your disk",
+  "main": "lib/index.js",
+  "bin": "bin/delete-duplicates.js",
+  "private": false,
+  "files": [
+    "bin",
+    "lib"
+  ],
   "scripts": {
-    "start": "node index.js",
-    "format": "prettier -w index.js"
+    "start": "node src/index.js",
+    "format": "prettier -w src",
+    "build": "rm -rf lib && babel src --out-dir lib"
   },
-  "author": "",
+  "author": "Daniel Han <hex0cter@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "command-line-args": "^5.2.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "prettier": "^2.7.1"
   }
 }

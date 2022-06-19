@@ -35,7 +35,7 @@ const removeFiles = (arrayOfFiles) => {
     if (options.delete) {
       try {
         fs.unlinkSync(file);
-      } catch {
+      } catch (err) {
         console.error(`Unable to delete ${file}`);
       }
     }
