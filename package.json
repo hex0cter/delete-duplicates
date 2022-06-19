@@ -1,6 +1,6 @@
 {
   "name": "delete-duplicates",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Delete duplicated files from your disk",
   "main": "lib/index.js",
   "bin": "bin/delete-duplicates.js",

@@ -1,4 +1,6 @@
 const fs = require("fs");
+const path = require('path');
+
 const commandLineArgs = require("command-line-args");
 
 const optionDefinitions = [
@@ -45,13 +47,12 @@ const removeFiles = (arrayOfFiles) => {
 const main = () => {
   log("CLI options:", options);
   const orderByPaths = options.orderBy;
-
-  const json = require(`./${options.json}`);
+  const json = require(path.join(process.cwd(), options.json));
   json.forEach((file) => {
     const paths = file.paths;
     log(`--------------------------------------------------`);
     log(`${paths.length} files as duplicates:`);
-    paths.forEach((path) => log(path));
+    paths.forEach((filePath) => log(filePath));
 
     let index = -1;
     for (let fileIndex = 0; fileIndex < paths.length; fileIndex++) {
