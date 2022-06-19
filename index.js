@@ -2,7 +2,8 @@ const fs = require("fs");
 const commandLineArgs = require("command-line-args");
 
 const optionDefinitions = [
-  { name: "verbose", alias: "v", type: Boolean, defaultValue: false },
+  { name: "quiet", alias: "q", type: Boolean, defaultValue: false },
+  { name: "delete", alias: "d", type: Boolean, defaultValue: false },
   {
     name: "orderBy",
     alias: "o",
@@ -14,8 +15,9 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-const debug = (...args) => {
-  if (options.verbose) console.debug(...args);
+const log = (...args) => {
+  if (options.quiet) return;
+  console.debug(...args);
 };
 
 const startsWithOneOf = (fullPath, arrayOfDirs) => {
@@ -27,23 +29,29 @@ const startsWithOneOf = (fullPath, arrayOfDirs) => {
 };
 
 const removeFiles = (arrayOfFiles) => {
-  debug(`removing ${arrayOfFiles.length} files:`);
+  log(`removing ${arrayOfFiles.length} files:`);
   arrayOfFiles.forEach((file) => {
-    debug(`removing ${file}`);
-    fs.unlinkSync(file);
+    log(`removing ${file}`);
+    if (options.delete) {
+      try {
+        fs.unlinkSync(file);
+      } catch {
+        console.error(`Unable to delete ${file}`);
+      }
+    }
   });
 };
 
 const main = () => {
-  debug("CLI options:", options);
+  log("CLI options:", options);
   const orderByPaths = options.orderBy;
 
   const json = require(`./${options.json}`);
   json.forEach((file) => {
     const paths = file.paths;
-    debug(`--------------------------------------------------`);
-    debug(`${paths.length} files as duplicates:`);
-    paths.forEach((path) => debug(path));
+    log(`--------------------------------------------------`);
+    log(`${paths.length} files as duplicates:`);
+    paths.forEach((path) => log(path));
 
     let index = -1;
     for (let fileIndex = 0; fileIndex < paths.length; fileIndex++) {
@@ -56,12 +64,12 @@ const main = () => {
     const filesToRemove = [...paths];
     if (index !== -1) {
       // found, keep the one with index
-      debug(`found in ${orderByPaths[index]}, index: ${index}`);
+      log(`found in ${orderByPaths[index]}, index: ${index}`);
       filesToRemove.splice(index, 1);
     } else {
       // not found, keep the first one and delete the rest;
       filesToRemove.splice(0, 1);
-      debug(`not found any of ${orderByPaths}`);
+      log(`not found any of ${orderByPaths}`);
     }
     removeFiles(filesToRemove);
   });
