@@ -15,7 +15,14 @@
     "build": "rm -rf lib && babel src --out-dir lib"
   },
   "author": "Daniel Han <hex0cter@gmail.com>",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hex0cter/delete-duplicates.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hex0cter/delete-duplicates/issues"
+  },
   "dependencies": {
     "command-line-args": "^5.2.1"
   },
