@@ -8,8 +8,8 @@ const optionDefinitions = [
 ]
 const options = commandLineArgs(optionDefinitions)
 
-const debug = (text) => {
-  if(options.verbose) console.debug(text)
+const debug = (...args) => {
+  if(options.verbose) console.debug(...args)
 }
 
 const startsWithOneOf = (fullPath, arrayOfDirs) => {
@@ -28,7 +28,7 @@ const removeFiles = (arrayOfFiles) => {
 };
 
 const main = () => {
-  debug("I can run", options);
+  debug("CLI options:", options);
   const orderByPaths = options.orderBy;
 
   const json = require(`./${options.json}`);
