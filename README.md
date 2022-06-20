@@ -7,8 +7,9 @@ A CLI command inspired by [go-find-duplicates](https://github.com/m-manu/go-find
 ```
 go install github.com/m-manu/go-find-duplicates@latest
 export PATH="$PATH:$HOME/go/bin"
+go-find-duplicates -o json {dir-1} {dir-2} ... {dir-n}
 ```
-
+This generate a json file called `duplicates-*.json`
 ### Install Delete Duplicate:
 ```
 npm install -g delete-duplicates
